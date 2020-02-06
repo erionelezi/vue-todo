@@ -4,41 +4,29 @@ import {vueUse} from "bootstrap-vue/esm/utils/plugins";
 vueUse (axios)
 
 const state = {
-    todos: [
-        {
-            id:1,
-            title:'Todo 1',
-        },
-        {
-            id:2,
-            title:'Todo 2',
-        },
-        {
-            id:3,
-            title:'Todo 3',
-        },
-        {
-            id:4,
-            title:'Todo 4',
-        },
-        {
-            id:5,
-            title:'Todo 5',
-        },
-        {
-            id:6,
-            title:'Todo 6',
-        }
-    ]
+    todos: []
 }
 
 const getters = {
     allTodos: (state) =>state.todos
-}
+};
 
-const actions = {}
+const actions = {
+    async fetchTodos({commit}) {
+        const response = await axios.get('https://jsonplaceholder.typicode.com/todos/');
 
-const mutations = {}
+   commit ('setTodos',response.data);
+    },
+    async addTodo ({commit},title){
+        const response =await axios.post('https://jsonplaceholder.typicode.com/todos/',{title,completed:false});
+        commit ('newTodo',response.data);
+    }
+};
+
+const mutations = {
+    setTodos: (state, todos) => (state.todos = todos),
+    newTodo: (state,todo) => state.todos.unshift(todo)
+};
 
 export default {
     state,
