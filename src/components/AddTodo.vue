@@ -13,7 +13,7 @@
 <script>
     import  {mapActions} from 'vuex';
     export default {
-        name: "Add Todo",
+        name: "AddTodo",
         data(){
             return{
                 title:''
